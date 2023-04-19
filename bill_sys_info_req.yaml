@@ -1,0 +1,15 @@
+---
+
+- hosts: "{{ variable_host | default('servers') }}"
+  serial: 45
+  gather_facts: yes
+  no_log: false
+
+
+  tasks:
+
+  - name: hostinfo
+    shell: dmidecode -t system information | grep 'Manufacturer\|Product Name'
+    register: dmi_out
+
+  - debug: var=dmi_out.stdout
